@@ -1,12 +1,21 @@
 import express from 'express';
 import productRoutes from './routes/productRoutes.js';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
 
 const app = express();
 const port = 5000;
 
-
+mongoose.connect('mongodb+srv://psg017597:pass900@cluster0.yqujtfd.mongodb.net/Shop').then((val) => {
+  app.listen(port, () => {
+    console.log(' database connected server is running');
+  });
+}).catch((err) => {
+  console.log(err);
+})
 
 app.use(express.json());
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
   console.log(req.body);
@@ -17,6 +26,3 @@ app.get('/', (req, res) => {
 app.use(productRoutes);
 
 
-app.listen(port, () => {
-  console.log('server is running');
-});

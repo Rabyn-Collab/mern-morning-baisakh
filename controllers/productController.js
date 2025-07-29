@@ -1,10 +1,19 @@
+import Product from "../models/Product.js";
 
 
 
 
 
-export const getProducts = (req, res) => {
-  return res.status(200).json({ message: 'Welcome To Products' });
+export const getProducts = async (req, res) => {
+  try {
+
+    const products = await Product.find({});
+    return res.status(200).json({
+      products
+    });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
 }
 
 export const getProduct = (req, res) => {
