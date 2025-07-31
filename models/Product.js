@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema({
   },
   brand: {
     type: String,
-    enum: ["Levis", "Puma", "Zara", "Adidas", "Samsung", "Apple", "Lenovo", "Tanishq"],
+    enum: ["Levis", "Puma", "Zara", "Addidas", "Samsung", "Apple", "Lenovo", "Tanishq"],
     required: true
   },
   stock: {
