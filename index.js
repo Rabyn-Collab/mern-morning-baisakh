@@ -2,6 +2,7 @@ import express from 'express';
 import productRoutes from './routes/productRoutes.js';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import fileUpload from 'express-fileupload';
 
 const app = express();
 const port = 5000;
@@ -16,6 +17,7 @@ mongoose.connect('mongodb+srv://psg017597:pass900@cluster0.yqujtfd.mongodb.net/S
 
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(fileUpload({}));
 
 app.get('/', (req, res) => {
   console.log(req.body);

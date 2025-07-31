@@ -22,7 +22,8 @@ export const getProduct = (req, res) => {
   return res.status(200).json({ message: 'Welcome To Product' });
 }
 
-export const createProduct = (req, res) => {
+export const createProduct = async (req, res) => {
+
   return res.status(200).json({ message: 'Welcome To Create Product' });
 }
 
