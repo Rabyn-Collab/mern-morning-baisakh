@@ -3,6 +3,10 @@ import { Formik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import * as Yup from 'yup';
+import { useLoginUserMutation } from "./authApi.js";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { addUser } from "../user/userSlice.js";
 
 const loginSchema = Yup.object({
   email: Yup.string().email().required(),
@@ -10,8 +14,10 @@ const loginSchema = Yup.object({
 });
 
 export default function Login() {
+  const [loginUser, { isLoading }] = useLoginUserMutation();
   const [show, setShow] = useState(false);
   const nav = useNavigate();
+  const dispatch = useDispatch();
   return (
     <div className="p-5 max-w-[400px]">
 
@@ -20,8 +26,15 @@ export default function Login() {
           email: '',
           password: ''
         }}
-        onSubmit={(val) => {
-
+        onSubmit={async (val) => {
+          try {
+            const response = await loginUser(val).unwrap();
+            dispatch(addUser(response));
+            toast.success('logged in successfully');
+            nav(-1);
+          } catch (err) {
+            toast.error(err.data.message || err.error);
+          }
         }}
         validationSchema={loginSchema}
       >
@@ -61,7 +74,7 @@ export default function Login() {
             </div>
 
 
-            <Button type="submit">Submit</Button>
+            <Button loading={isLoading} type="submit">Submit</Button>
 
           </form>
         )}
